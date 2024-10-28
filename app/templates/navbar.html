@@ -1,0 +1,11 @@
+<nav>
+    <ul>
+        {% if user.is_authenticated %}
+            <li><h3>Bienvenido, {{ user.username }}!</h3></li>
+            <li><a href="{% url 'logout' %}"><h3>Cerrar sesión</h3></a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}"><h3>Iniciar sesión</h3></a></li>
+            <li><a href="{% url 'registro' %}"><h3>Registro</h3></a></li>
+        {% endif %}
+    </ul>
+</nav>
