@@ -20,7 +20,7 @@ from app.views import RegistroUsuario
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("app",include("app.urls")),
     path('', include ('app.urls')),
-    path('accounts/',include('django.contrib.auth.urls')),
     path('registrarse/', RegistroUsuario.as_view(), name='register'),
 ]
