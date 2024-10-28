@@ -10,4 +10,4 @@ class Publicacion (models.Model):
     autor = models.ForeignKey(User , on_delete=models.CASCADE) #Si un usuario se elimina, todas las publicaciones de dicho usuario se eliminaran tambien.
 
     def __str__(self) -> str:
-        return f"De: {self.titulo} de {self.autor}"
+        return f"{self.titulo} de {self.autor}"

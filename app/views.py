@@ -1,18 +1,14 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from app.forms import RegistroFormulario
+from django.contrib.auth.decorators import login_required # Para proteger vistas.
 
-# Create your views here.
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
+def home_view(request):
+    return render(request, 'home.html')
 
-def register(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-    if form.is_valid():
-        form.save()
-        username = form.cleaned_data.get("username")
-        messages.success(request, f"¡Cuenta creada para {username}!")
-        return redirect("login") # Redireccionar a la página de inicio de sesión o cualquier otra página que desee
-    else:
-        form = UserCreationForm()
-        return render(request, "account/register.html", {"form": form})
+class RegistroUsuario(CreateView):
+    template_name = 'accounts/register.html'  # Ruta a la plantilla
+    form_class = RegistroFormulario  # Formulario personalizado
+    success_url = reverse_lazy('login')  # Redirige despues del registro
+
