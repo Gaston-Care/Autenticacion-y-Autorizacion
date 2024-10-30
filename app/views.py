@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
 from app.forms import RegistroFormulario
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from app.models import Publicacion # Para proteger vistas.
 
@@ -14,8 +16,18 @@ class RegistroUsuario(CreateView):
     form_class = RegistroFormulario  # Formulario personalizado
     success_url = reverse_lazy('login')  # Redirige despues del registro
 
-# Agregar login_required y permission_required a las vistas necesarias.
+# Agregar permission_required
+class CrearPublicacion(LoginRequiredMixin, CreateView):
+    model = Publicacion
+    fields = ['titulo','contenido']
+    template_name = 'crear_publicacion.html'
+    success_url = reverse_lazy('publicaciones')
 
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+# Agregar login_required
 class Publicaciones(ListView):
     model = Publicacion
     paginate_by = 4
