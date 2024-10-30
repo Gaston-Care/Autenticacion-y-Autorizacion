@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Publicaciones - My Website{% endblock %}
+
+{% block header %}
+    <h1 style="margin-top: 50px; margin-bottom: 50px;">Publicaciones</h1>
+{% endblock %}
+
+{% block content %}
+    {% if object_list %}
+        {% for publicacion in object_list %}
+            <ul class="lista-publicaciones">
+                <li><h3> {{ publicacion.titulo|capfirst }} </h3></li>
+                <li style="font-weight: bold; color: rgb(49, 49, 49);"> {{ publicacion.fecha_de_publicacion }}</li>
+                <form method="get" action="{% url 'detalle_publicacion' publicacion.pk %}">
+                    {% csrf_token %}
+                    <button class="boton" type="submit">Ver Detalles</button>
+                </form>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No hay publicaciones para mostrar.</p>
+    {% endif %}
+
+    <!-- Enlaces de paginación -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}"><i>anterior</i></a>
+            {% endif %}
+
+            <span class="current">
+                <i>  Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.  </i>
+            </span> 
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><i>siguiente</i></a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
