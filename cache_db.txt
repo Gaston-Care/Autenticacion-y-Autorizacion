@@ -1,0 +1,22 @@
+Backend de almacenamiento de sesiones elegido: cached_db
+
+Ventajas:
+- Mejora del rendimiento de lectura: Almacena las sesiones en caché primero, lo que permite acceder a los datos de forma más rápida y reduce la latencia en las lecturas.
+
+- Reducción de carga en la base de datos: Aunque las escrituras aún se realizan en la base de datos, las lecturas frecuentes pueden mejorar el rendimiento general al minimizar las consultas a la base de datos.
+
+- Persistencia de datos: Almacena una copia de seguridad de las sesiones en la base de datos, lo que garantiza que los datos no se pierdan si la caché se vacía o si hay un reinicio del servidor.
+
+- Flexibilidad: Permite mantener la persistencia de las sesiones en la base de datos mientras se aprovechan los beneficios de la caché, lo que puede ser una buena solución intermedia.
+
+Desventajas:
+- Carga de escritura en la base de datos: Aunque las lecturas son más rápidas, las escrituras aún requieren acceso a la base de datos, lo que puede resultar en una carga adicional si hay muchas sesiones activas.
+
+- Complejidad en la configuración: Configurar y mantener un sistema que combine caché y base de datos puede ser más complejo que usar un solo backend.
+
+- Riesgo de inconsistencia: En situaciones de falla o cuando la caché se vacía, puede haber un pequeño riesgo de que las sesiones no estén sincronizadas entre la caché y la base de datos.
+
+- Dependencia de la caché: Si el sistema de caché falla o se desconfigura, puede afectar el rendimiento de las sesiones, aunque las sesiones aún se puedan recuperar de la base de datos.
+
+Ejemplo de configuración en settings.py:
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
