@@ -48,3 +48,14 @@ class EditarPublicacion(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
     def get_queryset(self):
         return Publicacion.objects.filter(autor=self.request.user)
+    
+class EliminarPublicacion(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        publicacion = get_object_or_404(Publicacion, pk=pk, autor=request.user)
+        publicacion.delete()
+        return redirect('publicaciones')  # Redirige a la lista de publicaciones después de eliminar
+
+    def get(self, request, pk, *args, **kwargs):
+        publicacion = get_object_or_404(Publicacion, pk=pk, autor=request.user)
+        # Puedes mostrar un mensaje o simplemente redirigir a otra vista
+        return redirect('publicaciones')  # O renderizar una respuesta que informe que no se puede acceder a esta vista
