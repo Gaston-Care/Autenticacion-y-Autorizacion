@@ -125,6 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home' # Redirecciono al home al loguearse
 LOGOUT_REDIRECT_URL = 'home' # Redirecciono al home al desloguearse
+LOGIN_URL = 'login'
 
 # Configuración de sesiones
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

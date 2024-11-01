@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Publiación - My Website{% endblock %}
+
+{% block header %}
+    <h1 style="margin-top: 50px; margin-bottom: 50px;">Detalle de publiacion</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="detalle-publicacion">
+        <h2>{{ object.titulo|capfirst }}</h2>
+        <p> {{ object.contenido|capfirst }}</p>
+        <p><b>Fecha:</b> {{ object.fecha_de_publicacion }}</p>
+        <p><b>Autor:</b> {{ object.autor|capfirst }}</p>
+        
+        <form method="post" action="{% url 'eliminar_publicacion' object.pk %}">
+            {% csrf_token %}
+            <button class="boton-eliminar" type="submit">Eliminar publiacion</button>
+        </form>
+
+        <form method="get" action="{% url 'editar_publicacion' object.pk %}">
+            {% csrf_token %}
+            <button class="boton" type="submit">Editar publiacion</button>
+        </form>
+    </div>
+{% endblock %}

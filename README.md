@@ -5,7 +5,7 @@ Es un proyecto Django para . El cual permite .
 ## Descripción
 
 Este proyecto es una aplicación web basada en Django que proporciona las siguientes funcionalidades:
--
+-   
 - 
 - 
 
