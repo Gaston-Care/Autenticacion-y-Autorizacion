@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
@@ -19,10 +20,10 @@ class RegistroUsuario(CreateView):
 # Agregar permission_required
 class CrearPublicacion(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
     model = Publicacion
+    permission_required = "app.add_publicacion"  # Solo los que tengan este permiso podran acceder a la vista.
     fields = ['titulo','contenido']
     template_name = 'crear_publicacion.html'
     success_url = reverse_lazy('publicaciones')
-    permission_required = "app.addPublicacion" # Permiso para agregar una publicacion
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -33,7 +34,7 @@ class Publicaciones(LoginRequiredMixin, ListView):
     paginate_by=4
     template_name = 'publicaciones.html'
     context_object_name = 'publicaciones'
-    permission_required = "app.viewPublicacion"
+    permission_required = "app.view_publicacion"
 
 class DetallePublicacion(DetailView):
     model = Publicacion
@@ -42,20 +43,17 @@ class DetallePublicacion(DetailView):
 class EditarPublicacion(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Publicacion
     fields = ['titulo', 'contenido']
-    template_name = 'editar_publicacion.html' # Template no creado todavia no probar!!!!!
+    template_name = 'editar_publicacion.html'
     success_url = reverse_lazy('publicaciones')
-    permission_required = "app.changePublicacion" # Permiso para cambiar una publicacion
-
-    def get_queryset(self):
-        return Publicacion.objects.filter(autor=self.request.user)
+    permission_required = "app.change_publicacion"  # Solo los que tengan este permiso podran acceder a la vista.
     
-class EliminarPublicacion(LoginRequiredMixin, View):
-    def post(self, request, pk, *args, **kwargs):
-        publicacion = get_object_or_404(Publicacion, pk=pk, autor=request.user)
-        publicacion.delete()
-        return redirect('publicaciones')  # Redirige a la lista de publicaciones después de eliminar
+class EliminarPublicacion(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Publicacion
+    permission_required = "app.delete_publicacion"  # Solo los que tengan este permiso podran acceder a la vista.
+    success_url = reverse_lazy('publicaciones')
 
-    def get(self, request, pk, *args, **kwargs):
-        publicacion = get_object_or_404(Publicacion, pk=pk, autor=request.user)
-        # Puedes mostrar un mensaje o simplemente redirigir a otra vista
-        return redirect('publicaciones')  # O renderizar una respuesta que informe que no se puede acceder a esta vista
+    def post(self, request, *args, **kwargs):
+        # Llamamos al método delete directamente
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.success_url)

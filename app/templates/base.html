@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}My Website{% endblock %}</title>
+        {%load static %}
+        <link rel="stylesheet" href="{% static 'publicaciones/styles.css' %}">
+        
     </head>
 
     <body>
     <header>
+
+        {% include "navbar.html" %}
+
+        <div class="header-titulo" style="text-align: center;">
+            <h1>Welcome to My Website</h1>
+        </div>    
+
+        
+
         <div class="user">
             {% if user.is_authenticated %}
-                <p>Hola {{user.username|capfirst}}, Bienvenido!
-                    <br>
-                    <a href="{% url 'logout' %}">Log out</a>
-                </p>
+                Hola {{ user.username|capfirst }}<br>
+                <a href="{% url 'logout' %}">Cerrar Sesión</a>
             {% else %}
-                <p> Usted no está loggeado.
-                    <br>
-                    <a href="{% url 'login' %}">Iniciar Sesión</a>
-                </p>
-                <p>
-                    <a href="{% url 'register' %}">Registrarse</a>
-                </p>
+                Hola anónimo/a
+                <a href="{% url 'login' %}">Iniciar Sesión</a><br>
+                <a href="{% url 'register' %}">¿No tienes una cuenta? Ingresa aquí</a>
             {% endif %}
+            <br><br>
         </div>
 
-        <div class="navbar">
-            {% include 'navbar.html' %}
-        </div>
-
-        <h1>{% block header %}Welcome to My Website{% endblock %}</h1>
     </header>
     
     <div class="content">
         {% block content %} {% endblock %}
     </div>
 
-    <footer>
+    <footer style="text-align: center;">
         <p>&copy; 2024</p>
     </footer>
 
