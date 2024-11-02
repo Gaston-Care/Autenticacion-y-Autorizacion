@@ -7,6 +7,7 @@ from app.forms import RegistroFormulario
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from app.models import Publicacion # Para proteger vistas.
 
 def home_view(request):
@@ -24,6 +25,7 @@ class CrearPublicacion(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
     fields = ['titulo','contenido']
     template_name = 'crear_publicacion.html'
     success_url = reverse_lazy('publicaciones')
+    permission_required = "app.add_publicacion"
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -46,6 +48,14 @@ class EditarPublicacion(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     template_name = 'editar_publicacion.html'
     success_url = reverse_lazy('publicaciones')
     permission_required = "app.change_publicacion"  # Solo los que tengan este permiso podran acceder a la vista.
+    
+    def dispatch(self, request, *args, **kwargs): # Verificacion que evita acceder a la vista EDITAR por medio de la URL
+        # publicación que se va a editar
+        publicacion = self.get_object()
+        # Verifica si el usuario es el autor
+        if publicacion.autor != request.user:
+            raise PermissionDenied()
+        return super().dispatch(request, *args, **kwargs)
     
 class EliminarPublicacion(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Publicacion

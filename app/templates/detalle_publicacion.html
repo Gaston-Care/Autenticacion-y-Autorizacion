@@ -13,14 +13,16 @@
         <p><b>Fecha:</b> {{ object.fecha_publicacion }}</p>
         <p><b>Autor:</b> {{ object.autor|capfirst }}</p>
         
-        <form action="{% url 'eliminar_publicacion' object.pk %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="boton-eliminar">Eliminar publiacion</button>
-        </form>
-        <br>
-        <form method="get" action="{% url 'editar_publicacion' object.pk %}">
-            {% csrf_token %}
-            <button class="boton" type="submit">Editar publiacion</button>
-        </form>
+        {% if user.is_authenticated and user == object.autor %}
+    <form action="{% url 'eliminar_publicacion' object.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="boton-eliminar">Eliminar publicación</button>
+    </form>
+    <br>
+    <form method="get" action="{% url 'editar_publicacion' object.pk %}">
+        <button class="boton" type="submit">Editar publicación</button>
+    </form>
+{% endif %}
+
     </div>
 {% endblock %}
