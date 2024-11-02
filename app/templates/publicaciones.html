@@ -14,7 +14,7 @@
                 <li style="font-weight: bold; color: rgb(49, 49, 49);"> {{ publicacion.fecha_publicacion }}</li>
                 <form method="get" action="{% url 'detalle_publicacion' publicacion.pk %}">
                     {% csrf_token %}
-                    <button class="boton" type="submit">Ver Detalles</button>
+                    <button class="boton-verde" type="submit">Ver Detalles</button>
                 </form>
             </ul>
         {% endfor %}

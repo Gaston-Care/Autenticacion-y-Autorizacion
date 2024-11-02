@@ -1,7 +1,14 @@
 <nav>
     <ul>
         <li><a href="{% url 'home' %}">Inicio</a></li>
-        <li><a href="{% url 'publicaciones' %}"> Publiaciones</a></li>
-        <li><a href="{% url 'publicaciones_crear' %}">Crear publiacion</a> </li>
+        <li><a href="{% url 'publicaciones' %}">Publicaciones</a></li>
+        
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'publicaciones_crear' %}">Crear Publicación</a></li>
+            <li><a href="{% url 'logout' %}" class="boton">Cerrar Sesión</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}" class="boton">Iniciar Sesión</a></li>
+            <li><a href="{% url 'register' %}" class="boton">Registrarse</a></li>
+        {% endif %}
     </ul>        
 </nav>

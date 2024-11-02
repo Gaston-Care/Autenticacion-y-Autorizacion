@@ -2,25 +2,29 @@ header {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    padding: 5px;
+    padding: 10px;
     background-color: rgb(57, 126, 187);
-  }
+}
 
 .header-titulo {
-    flex: 1; 
     text-align: center;
+    margin-top: 10px;
+    margin-right: 30px;
+    font-size: 1.8em;
+    color: #ffffff;
 }
   
 .user {
-    margin-left: auto; 
-    text-align: right; 
-    padding: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    text-align: right;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    justify-content: flex-start; 
     padding: 0; 
     margin: 0;
 }
@@ -48,6 +52,40 @@ body {
     padding: 20px;
 }
 
+.content {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 90%;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #394867;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.boton {
+    color: #FFF;
+    font-weight: 600;
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 5px;
+}
+.boton:hover {
+    color: #000;
+    background-color: #ffffff;
+}
+
 .boton-eliminar {
     color: #FFF; 
     font-weight: 600; 
@@ -66,21 +104,21 @@ body {
     background-color: #e60000;
 }
 
-.boton {
-    color: #FFF; 
-    font-weight: 600bold; 
-    width: 200px; 
-    height: 25px; 
-    border-radius: 5px; 
-    border: none; 
-    text-align: center; 
-    font-size: 17px; 
-    cursor: pointer; 
+.boton-verde {
+    color: #FFF;
+    font-weight: 600;
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-size: 17px;
+    cursor: pointer;
     background-color: #0ea700;
     margin: 5px;
 }
 
-.boton:hover {
+.boton-verde:hover {
     background-color: #08d401;
 }
 
@@ -90,23 +128,15 @@ form label {
     font-weight: bold;
 }
 
-form input[type="text"]{
+form input[type="text"],
+form input[type="password"] {
     width: 300px;
-    height: 30px;
+    height: 35px;
     border-radius: 15px;
-    border: none;
+    border: 1px solid #ccc; /* Adds a subtle border */
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-    margin-bottom: 15px;
-}
-
-form input[type="password"]{
-    width: 300px;
-    height: 30px;
-    border-radius: 15px;
-    border: none;
-    text-align: center;
     margin-bottom: 15px;
 }
 
@@ -116,4 +146,6 @@ form textarea {
     box-sizing: border-box;
     resize: none;
     border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 15px;
 }
